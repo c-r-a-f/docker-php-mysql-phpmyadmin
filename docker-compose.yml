@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  webserver:
+    build:
+      context: ./bin/webserver
+    container_name: '7.3.x-webserver'
+    restart: 'always'
+    ports:
+      - "1111:80"
+      - "443:443"
+    links:
+      - mysql
+    volumes:
+      - ${DOCUMENT_ROOT-./www}:/var/www/html
+      - ${PHP_INI-./config/php/php.ini}:/usr/local/etc/php/php.ini
+      - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
+      - ${LOG_DIR-./logs/apache2}:/var/log/apache2
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_host
+    environment:
+    - MYSQL_ROOT_PASSWORD=test
+    - MYSQL_USER=test
+    - MYSQL_PASSWORD=test
+    - TZ='Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./db/data:/var/lib/mysql
+    - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+    - 3306:3306
+
+  phpmyadmin:
+    container_name: test_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOSTS=mysql_host
+    - PMA_USER=test
+    - PMA_PASSWORD=test
+    ports:
+    - 8081:80
+    volumes:
+    - ./phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
