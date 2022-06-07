@@ -22,24 +22,23 @@ services:
     container_name: mysql_host
     environment:
     - MYSQL_ROOT_PASSWORD=test
-    - MYSQL_USER=test
     - MYSQL_PASSWORD=test
     - TZ='Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-      #- ./db/initdb.d:/docker-entrypoint-initdb.d
+    #- ./db/initdb.d:/docker-entrypoint-initdb.d
     - ./db/data:/var/lib/mysql
     - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
     ports:
     - 3306:3306
 
   phpmyadmin:
-    container_name: test_phpmyadmin
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     environment:
     - PMA_ARBITRARY=1
     - PMA_HOSTS=mysql_host
-    - PMA_USER=test
+    - PMA_USER=root
     - PMA_PASSWORD=test
     ports:
     - 8081:80
