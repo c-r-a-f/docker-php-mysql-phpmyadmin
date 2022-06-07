@@ -1,7 +1,7 @@
 <?php
 
 define('DSN', 'mysql:host=mysql_host;charset=utf8mb4;');
-define('DB_USERNAME', 'test');
+define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'test');
 
 function db_connect(){

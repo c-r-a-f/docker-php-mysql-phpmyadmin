@@ -17,21 +17,23 @@ services:
       - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
       - ${LOG_DIR-./logs/apache2}:/var/log/apache2
 
+
   mysql:
-    image: mysql:8.0
+    image: mysql:5.7
     container_name: mysql_host
     environment:
     - MYSQL_ROOT_PASSWORD=test
     - MYSQL_PASSWORD=test
     - TZ='Asia/Tokyo'
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        #command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-    #- ./db/initdb.d:/docker-entrypoint-initdb.d
     - ./db/data:/var/lib/mysql
     - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      #- ./init_scripts:/docker-entrypoint-initdb.d
     ports:
     - 3306:3306
 
+  # phpMyAdmin
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
