@@ -28,4 +28,3 @@ function db_connect(){
 
 $pdo = db_connect();
 echo $pdo->query('SHOW DATABASES')->fetchColumn();
-
