@@ -17,32 +17,30 @@ services:
       - ${VHOSTS_DIR-./config/vhosts}:/etc/apache2/sites-enabled
       - ${LOG_DIR-./logs/apache2}:/var/log/apache2
 
-
   mysql:
     image: mysql:5.7
     container_name: mysql_host
-    environment:
-    - MYSQL_ROOT_PASSWORD=test
-    - MYSQL_PASSWORD=test
-    - TZ='Asia/Tokyo'
+      environment:
+      - MYSQL_ROOT_PASSWORD=test
+      - MYSQL_PASSWORD=test
+      - TZ='Asia/Tokyo'
         #command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     volumes:
-    - ./db/data:/var/lib/mysql
-    - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
       #- ./init_scripts:/docker-entrypoint-initdb.d
     ports:
-    - 3306:3306
+      - 3306:3306
 
-  # phpMyAdmin
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     environment:
-    - PMA_ARBITRARY=1
-    - PMA_HOSTS=mysql_host
-    - PMA_USER=root
-    - PMA_PASSWORD=test
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql_host
+      - PMA_USER=root
+      - PMA_PASSWORD=test
     ports:
-    - 8081:80
+      - 8081:80
     volumes:
-    - ./phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
+      - ./phpmyadmin/phpmyadmin-misc.ini:/usr/local/etc/php/conf.d/phpmyadmin-misc.ini
