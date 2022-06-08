@@ -20,7 +20,7 @@ services:
   mysql:
     image: mysql:5.7
     container_name: mysql_host
-      environment:
+    environment:
       - MYSQL_ROOT_PASSWORD=test
       - MYSQL_PASSWORD=test
       - TZ='Asia/Tokyo'
